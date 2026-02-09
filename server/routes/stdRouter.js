@@ -1,5 +1,6 @@
 const express=require('express');
-const { handleStdSignup } = require('../controllers/stdController');
+const { handleStdSignup, handleStdLogin, getStdDetails } = require('../controllers/stdController');
+const auth = require('../auth/auth');
 
 const stdRouter=express.Router();
 
@@ -11,4 +12,9 @@ stdRouter.get('/',(req,res)=>{
 //signup std 
 stdRouter.post('/signup',handleStdSignup)
 
+//login std
+stdRouter.post('/login',handleStdLogin);
+
+//get std details
+stdRouter.get('/get',auth,getStdDetails);
 module.exports=stdRouter;
