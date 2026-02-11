@@ -70,5 +70,63 @@ const getStdDetails=async(req,res)=>{
         return res.status(500).json({message:"inernal server error"})
     }
 }
-module.exports={handleStdSignup,handleStdLogin,getStdDetails}
+
+const handleUpdateStdName=async(req,res)=>{
+    try {
+        const {_id}=req.payload;
+        if(req.body== undefined){
+            return res.status(400).json({message:"detailsare mandatory to update student name"});
+        }
+        const {name}=req.body;
+        const isStd=await STD.findById({_id});
+        if(! isStd){
+            return res.status(401).json({message:"token not vaild because acc has been deleted"});
+        }
+        if(! name){
+            return res.status(400).json({message:"Input field is mandatory"});
+        }
+        if( name === isStd.name){
+            return res.status(400).json({message:"new name is same as privous"});
+        }
+        isStd.name=name;
+        await isStd.save();
+        return res.status(200).json({message:"name updated successfully"});
+    } catch (error) {
+        return res.status(500).json({message:"inernal server error"})
+    }
+}
+
+const handleStdUpdatePassword=async(req,res)=>{
+    try {
+        const {_id}=req.payload;
+        const isStd=await STD.findById({_id});
+        if(! isStd){
+            return res.status(401).json({message:"token not vaild because acc has been deleted"});
+        }
+        if(req.body== undefined){
+            return res.status(400).json({message:"detailsare mandatory to update student password"});
+        }   
+        const {password,newPassword}=req.body;
+        if(! password || ! newPassword){
+            return res.status(400).json({message:"Input field is mandatory"});
+        }
+        const isMatched=await bcrypt.compare(password,isStd.password);
+        if(!isMatched){
+            return res.status(401).json({message:"current password is wrong"});
+        }
+        if(password == newPassword){
+            return res.status(400).json({message:"new password cannot be same as current  password"});
+        }
+
+        const hashedPass=await bcrypt.hash(newPassword,10);
+
+        isStd.password=hashedPass;
+        await isStd.save();
+        return res.status(200).json({message:"password updated successfully"});
+
+    } catch (error) {
+        return res.status(500).json({message:"inernal server error"})
+    }
+}
+module.exports={handleStdSignup,handleStdLogin,getStdDetails,handleUpdateStdName,handleStdUpdatePassword}
 

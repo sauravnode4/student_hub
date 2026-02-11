@@ -1,5 +1,5 @@
 const express=require('express');
-const { handleStdSignup, handleStdLogin, getStdDetails } = require('../controllers/stdController');
+const { handleStdSignup, handleStdLogin, getStdDetails, handleUpdateStdName, handleStdUpdatePassword } = require('../controllers/stdController');
 const auth = require('../auth/auth');
 
 const stdRouter=express.Router();
@@ -17,4 +17,11 @@ stdRouter.post('/login',handleStdLogin);
 
 //get std details
 stdRouter.get('/get',auth,getStdDetails);
+
+//std update name
+stdRouter.patch('/updatename',auth,handleUpdateStdName);
+
+//update std password
+stdRouter.patch('/updatepassword',auth,handleStdUpdatePassword);
+
 module.exports=stdRouter;
