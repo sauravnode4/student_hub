@@ -1,9 +1,11 @@
 const express=require('express');
+const cors=require('cors');
 const {configDotenv}=require('dotenv');
 const connectDb = require('./dbConnection/db.js');
 const stdRouter = require('./routes/stdRouter.js');
 const app=express();
 
+app.use(cors());
 connectDb()
 //server testing api
 
