@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import {toast} from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom';
+import {Link} from 'react-router-dom'
 const Signup = () => {
     const [userDetails,setUserDetails]=useState({
         email:"",
@@ -30,6 +31,7 @@ const Signup = () => {
     }
   return (
     <div>
+        <h1>SIGNUP PAGE</h1>
         <form onSubmit={handleSubmit}>
              <input type='text' value={userDetails.name} placeholder='name' name='name' onChange={handleFormChange}></input>
              <input type="text" value={userDetails.email} placeholder='email' name='email' onChange={handleFormChange}/>
@@ -37,7 +39,8 @@ const Signup = () => {
              <input type="password" value={userDetails.password} placeholder='password' name='password' onChange={handleFormChange}/>
              <input type="submit" value="signup" />
         </form>
-
+        <br/><br/>
+        <div>alredy have an account ? <Link to='/login'>Login</Link></div>
     </div>
   )
 }
