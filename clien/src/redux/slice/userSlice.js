@@ -6,7 +6,8 @@ const userSlice= createSlice({
         name:"",
         email:"",
         role:"",
-        age:""
+        age:"",
+        isLogin:false
     },
     reducers:{
         updateUser:(state,action)=>{
@@ -14,6 +15,7 @@ const userSlice= createSlice({
             state.age=action.payload.age;
             state.email=action.payload.email;
             state.role=action.payload.role;
+            state.isLogin=action.payload.isLogin;
         }
     }
 })
