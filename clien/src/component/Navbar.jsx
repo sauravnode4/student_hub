@@ -1,16 +1,18 @@
 import React from 'react'
 import toast from 'react-hot-toast';
-import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom'
-import { updateUser } from '../redux/slice/userSlice';
+import { useUser } from '../context/userContext';
+
 
 const Navbar = () => {
     const navigate=useNavigate();
-    const dispatch=useDispatch()
+    const {setUserDetails,setIsLogin} =useUser()
     const handleLogout=()=>{
         localStorage.removeItem('token');
         toast.success('logout successfully');
-        dispatch(updateUser({name:"",email:"",age:"",isLogin:false,role:""}));
+        // dispatch(updateUser({name:"",email:"",age:"",isLogin:false,role:""}));
+        setUserDetails({name:"",email:"",age:"",role:""});
+        setIsLogin(false);
         navigate('/login');
     }
   return (

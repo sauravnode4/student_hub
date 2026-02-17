@@ -5,9 +5,10 @@ import Profile from './pages/Profile'
 import Signup from './pages/Signup'
 import {Toaster} from 'react-hot-toast'
 import Navbar from './component/Navbar'
-import { useSelector } from 'react-redux'
+import { useUser } from './context/userContext'
+
 const App = () => {
-  const {isLogin}=useSelector((state)=>state.user);
+  const {isLogin} =useUser()
   const token=localStorage.getItem('token');
   return (
     <BrowserRouter>

@@ -2,11 +2,12 @@ import axios from 'axios';
 import React, { useEffect } from 'react'
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom'
-import {useSelector,useDispatch} from 'react-redux'
-import { updateUser } from '../redux/slice/userSlice';
+import { useUser } from '../context/userContext';
+
 const Profile = () => {
-  const {name,email,age}=useSelector((state)=>state.user);
-  const dispatch=useDispatch();
+  // const {name,email,age}=useSelector((state)=>state.user);
+  // const dispatch=useDispatch();
+  const {userDetails,setUserDetails,setIsLogin} =useUser()
   const navigate=useNavigate();
   useEffect(()=>{
     const getStdDetails=async()=>{
@@ -21,7 +22,8 @@ const Profile = () => {
             "Content-Type": "application/json",
           },
         });
-        dispatch(updateUser({...res.data.std,isLogin:true}));
+        setUserDetails(res.data.std);
+        setIsLogin(true);
       } catch (error) {
           toast.error(error.response.data.message);
           localStorage.removeItem('token');
@@ -34,9 +36,9 @@ const Profile = () => {
     <div>
       <h1>PROFILE</h1>
 
-      <h3>name : {name}</h3>
-      <h3>age : {age}</h3>
-      <h3>email : {email}</h3>
+      <h3>name : {userDetails.name}</h3>
+      <h3>age : {userDetails.age}</h3>
+      <h3>email : {userDetails.email}</h3>
     </div>
   )
 }
