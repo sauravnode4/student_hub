@@ -10,7 +10,6 @@ const Navbar = () => {
     const handleLogout=()=>{
         localStorage.removeItem('token');
         toast.success('logout successfully');
-        // dispatch(updateUser({name:"",email:"",age:"",isLogin:false,role:""}));
         setUserDetails({name:"",email:"",age:"",role:""});
         setIsLogin(false);
         navigate('/login');

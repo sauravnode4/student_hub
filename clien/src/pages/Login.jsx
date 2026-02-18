@@ -19,7 +19,6 @@ const Login = () => {
 
       try {
         const res=await axios.post('http://localhost:3000/api/std/login' , {email:userDetails.email,password:userDetails.password});
-        console.log(res.data);
         localStorage.setItem('token',res.data.token);
          toast.success(res.data.message);
          navigate('/profile')
