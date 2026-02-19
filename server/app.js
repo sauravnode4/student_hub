@@ -3,6 +3,7 @@ const cors=require('cors');
 const {configDotenv}=require('dotenv');
 const connectDb = require('./dbConnection/db.js');
 const stdRouter = require('./routes/stdRouter.js');
+const stdSubRouter = require('./routes/stdSubRouter.js');
 const app=express();
 
 app.use(cors());
@@ -18,6 +19,8 @@ app.get('/',(req,res)=>{
 
 //api for std
 app.use('/api/std',stdRouter);
+
+app.use('/api/std/subject',stdSubRouter);
 
 app.listen(3000, 'localhost',()=>{
     console.log("server started at http://localhost:3000")

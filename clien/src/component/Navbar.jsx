@@ -18,7 +18,8 @@ const Navbar = () => {
     <div>
         <nav> 
             <Link to="/profile">Profile</Link>
-            
+            <br />
+            <Link to='/subject'>SUBJECT</Link>
             <button onClick={handleLogout}>Logout</button>
         </nav>
     </div>

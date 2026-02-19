@@ -6,6 +6,7 @@ import Signup from './pages/Signup'
 import {Toaster} from 'react-hot-toast'
 import Navbar from './component/Navbar'
 import { useUser } from './context/userContext'
+import Subjects from './pages/Subjects'
 
 const App = () => {
   const {isLogin} =useUser()
@@ -19,6 +20,8 @@ const App = () => {
           <Route path='/login' element={<Login/>}> </Route>
           <Route path='/profile' element={<Profile/>} ></Route>
           <Route path='/signup' element={<Signup />} ></Route>
+          <Route path='/subject' element={<Subjects/>} ></Route>
+
         </Routes>
         
     </BrowserRouter>
