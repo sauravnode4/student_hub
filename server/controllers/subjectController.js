@@ -27,4 +27,24 @@ const handleAddSubject=async(req,res)=>{
     }
 }
 
-module.exports={handleAddSubject}
+const handleGetAllSubject=async(req,res)=>{
+    try {
+        const {_id}=req.payload;
+        const allSubjects=await SUBJECT.find({stdId:_id});
+        return res.status(200).json({allSubjects});
+    } catch (error) {
+        return res.status(500).json({message:"inernal server error"})
+    }
+}
+
+const handleRemoveSubject=async(req,res)=>{
+    try {
+        const {id}=req.params;
+        await SUBJECT.deleteOne({_id:id});
+        return res.status(200).json({message:"subject removed successfully"})
+    } catch (error) {
+        return res.status(500).json({message:"inernal server error"})
+        
+    }
+}
+module.exports={handleAddSubject,handleGetAllSubject,handleRemoveSubject}
