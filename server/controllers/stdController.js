@@ -65,7 +65,7 @@ const getStdDetails=async(req,res)=>{
             return res.status(401).json({message:"token not vaild because acc has been deleted"});
         }
 
-        return res.status(200).json({std:isStd});
+        return res.status(200).json({user:isStd});
     } catch (error) {
         return res.status(500).json({message:"inernal server error"})
     }

@@ -3,13 +3,16 @@ import axios from 'axios'
 import {toast} from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom';
 import {Link} from 'react-router-dom'
+import { useUser } from '../context/userContext';
 const Signup = () => {
     const [userDetails,setUserDetails]=useState({
         email:"",
         name:"",
         age:"",
-        password:""
+        password:"",
+        code:""
     });
+     const {user,setUser}=useUser()
     const navigate=useNavigate()
     const handleFormChange=(e)=>{
         const {name,value}= e.target
@@ -20,9 +23,10 @@ const Signup = () => {
 
     const handleSubmit=async(e)=>{
         e.preventDefault();
-        const {email,name,age,password}=userDetails;
+        const {email,name,age,password,code}=userDetails;
         try {
-           const res=await  axios.post('http://localhost:3000/api/std/signup',{email,age,name,password});
+           const res=await  axios.post(`http://localhost:3000/api/${user}/signup`,{email,age,name,password,code});
+           console.log("hi");
            toast.success(res.data.message);
             navigate('/login');
         } catch (error) {
@@ -37,8 +41,14 @@ const Signup = () => {
              <input type="text" value={userDetails.email} placeholder='email' name='email' onChange={handleFormChange}/>
              <input type="text" value={userDetails.age} placeholder='age' name='age' onChange={handleFormChange}/>
              <input type="password" value={userDetails.password} placeholder='password' name='password' onChange={handleFormChange}/>
+             {
+                user === 'trainer' && <input type="text" value={userDetails.code} placeholder='code' name='code' onChange={handleFormChange}/>
+             }
              <input type="submit" value="signup" />
         </form>
+        
+        <h1>signup as {user} </h1>
+        <button onClick={()=>{setUser('std')}}>std</button> <button onClick={()=>setUser('trainer')}>trainer</button>
         <br/><br/>
         <div>alredy have an account ? <Link to='/login'>Login</Link></div>
     </div>

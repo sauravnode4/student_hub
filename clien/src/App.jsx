@@ -7,6 +7,7 @@ import {Toaster} from 'react-hot-toast'
 import Navbar from './component/Navbar'
 import { useUser } from './context/userContext'
 import Subjects from './pages/Subjects'
+import AllStudents from './pages/AllStudents'
 
 const App = () => {
   const {isLogin} =useUser()
@@ -21,6 +22,7 @@ const App = () => {
           <Route path='/profile' element={<Profile/>} ></Route>
           <Route path='/signup' element={<Signup />} ></Route>
           <Route path='/subject' element={<Subjects/>} ></Route>
+          <Route path='/allstudents' element={<AllStudents/>} ></Route>
 
         </Routes>
         

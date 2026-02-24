@@ -2,11 +2,13 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
+import { useUser } from '../context/userContext';
 const Login = () => {
   const [userDetails,setUserDetails]=useState({
         email:"",
         password:""
     });
+  const {user,setUser}=useUser()
     const navigate=useNavigate();
      const handleFormChange=(e)=>{
         const {name,value}= e.target
@@ -18,10 +20,10 @@ const Login = () => {
       e.preventDefault();
 
       try {
-        const res=await axios.post('http://localhost:3000/api/std/login' , {email:userDetails.email,password:userDetails.password});
+        const res=await axios.post(`http://localhost:3000/api/${user}/login` , {email:userDetails.email,password:userDetails.password});
         localStorage.setItem('token',res.data.token);
          toast.success(res.data.message);
-         navigate('/profile')
+         navigate('/profile');
       } catch (error) {
         toast.error(error.response.data.message);
       }
@@ -36,6 +38,9 @@ const Login = () => {
              <input type="submit" value="login"/>
         </form>
       <br/><br/>
+       <h1>login as {user} </h1>
+        <button onClick={()=>{setUser('std')}}>std</button> <button onClick={()=>setUser('trainer')}>trainer</button>
+        <br/><br/>
         <div>Don't have account ? <Link to='/signup'>signup</Link></div>
     </div>
   )

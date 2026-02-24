@@ -9,7 +9,7 @@ const Profile = () => {
   const [name,setName]=useState("");
   const [password,setPassword]=useState("");
   const [newPassword,setNewPassword]=useState("");
-  const {userDetails,setUserDetails,setIsLogin} =useUser()
+  const {userDetails,setUserDetails,setIsLogin,user} =useUser()
   const navigate=useNavigate();
   const getStdDetails=async()=>{
       const token=localStorage.getItem('token');
@@ -17,13 +17,14 @@ const Profile = () => {
         return navigate('/login');
       }
       try {
-        const res=await axios.get('http://localhost:3000/api/std/get',{
+        const res=await axios.get(`http://localhost:3000/api/${user}/get`,{
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
         });
-        setUserDetails(res.data.std);
+        setUserDetails(res.data.user);
+        localStorage.setItem('user',res.data.user.role);
         setIsLogin(true);
       } catch (error) {
           toast.error(error.response.data.message);
@@ -81,7 +82,7 @@ const Profile = () => {
     <div>
       <h1>PROFILE</h1>
 
-      <h3>name : {userDetails.name}  <button onClick={()=>setEdit("name")}>edit name</button></h3>
+      <h3>name : {userDetails.name} {userDetails.role === 'std' &&  <button onClick={()=>setEdit("name")}>edit name</button>}</h3>
       <h3>age : {userDetails.age}</h3>
       <h3>email : {userDetails.email}</h3>
 
@@ -94,7 +95,8 @@ const Profile = () => {
      }
 
      <br/>
-     <button onClick={()=>setEdit("password")}>update password</button>
+     {userDetails.role === 'std' && <button onClick={()=>setEdit("password")}>update password</button> }
+     
      <br/>
      {
        edit == 'password' && <form >

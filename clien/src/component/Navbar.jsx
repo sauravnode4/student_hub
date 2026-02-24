@@ -6,7 +6,7 @@ import { useUser } from '../context/userContext';
 
 const Navbar = () => {
     const navigate=useNavigate();
-    const {setUserDetails,setIsLogin} =useUser()
+    const {setUserDetails,setIsLogin ,userDetails} =useUser()
     const handleLogout=()=>{
         localStorage.removeItem('token');
         toast.success('logout successfully');
@@ -19,7 +19,9 @@ const Navbar = () => {
         <nav> 
             <Link to="/profile">Profile</Link>
             <br />
-            <Link to='/subject'>SUBJECT</Link>
+           {userDetails.role === 'std' ? <Link to='/subject'>SUBJECT</Link> : <Link to='/allstudents'>all students</Link>}
+
+          
             <button onClick={handleLogout}>Logout</button>
         </nav>
     </div>
