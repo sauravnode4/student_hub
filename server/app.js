@@ -5,6 +5,7 @@ const connectDb = require('./dbConnection/db.js');
 const stdRouter = require('./routes/stdRouter.js');
 const stdSubRouter = require('./routes/stdSubRouter.js');
 const trainerRouter = require('./routes/trainerRouter.js');
+const otpRouter = require('./routes/otpRouter.js');
 const app=express();
 
 app.use(cors());
@@ -24,6 +25,8 @@ app.use('/api/std',stdRouter);
 app.use('/api/std/subject',stdSubRouter);
 
 app.use('/api/trainer',trainerRouter);
+
+app.use('/api/otp',otpRouter);
 
 app.listen(3000, 'localhost',()=>{
     console.log("server started at http://localhost:3000")

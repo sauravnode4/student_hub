@@ -37,6 +37,8 @@ const Login = () => {
              <input type="password" value={userDetails.password} placeholder='password' name='password' onChange={handleFormChange}/>
              <input type="submit" value="login"/>
         </form>
+          <br/><br/>
+          <Link to='/forget'>forget password</Link>
       <br/><br/>
        <h1>login as {user} </h1>
         <button onClick={()=>{setUser('std')}}>std</button> <button onClick={()=>setUser('trainer')}>trainer</button>

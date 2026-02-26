@@ -8,6 +8,7 @@ import Navbar from './component/Navbar'
 import { useUser } from './context/userContext'
 import Subjects from './pages/Subjects'
 import AllStudents from './pages/AllStudents'
+import ForgetPassword from './pages/ForgetPassword'
 
 const App = () => {
   const {isLogin} =useUser()
@@ -23,6 +24,7 @@ const App = () => {
           <Route path='/signup' element={<Signup />} ></Route>
           <Route path='/subject' element={<Subjects/>} ></Route>
           <Route path='/allstudents' element={<AllStudents/>} ></Route>
+          <Route path='/forget' element={<ForgetPassword/>} ></Route>
 
         </Routes>
         
