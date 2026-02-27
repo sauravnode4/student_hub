@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import { useUser } from '../context/userContext';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const ForgetPassword = () => {
+    const navigate=useNavigate();
     const [email,setEmail]=useState("");
     const [otp,setOtp]=useState("");
      const [password,setPassword]=useState("");
@@ -11,12 +13,14 @@ const ForgetPassword = () => {
     const {user,setUser}=useUser()
     const handleGetOtp= async(e)=>{
         e.preventDefault();
-        
+        const toastId=toast.loading('generating otp and sending to your email');
         try {
           const res=await axios.post('http://localhost:3000/api/otp',{email,role:user});
+          toast.dismiss(toastId)
           toast.success(res.data.message);
-          setStep(step+1);
+          setStep(1);
         } catch (error) {
+          toast.dismiss(toastId)
           toast.error(error.response.data.message);
         }
     
@@ -28,7 +32,7 @@ const ForgetPassword = () => {
           const res=await axios.post('http://localhost:3000/api/otp/verify',{email,otp});
 
           toast.success(res.data.message);
-          setStep(step+1);
+          setStep(2);
        } catch (error) {
           toast.error(error.response.data.message);
        }
@@ -36,12 +40,18 @@ const ForgetPassword = () => {
 
     const handleUpdatePassword=async(e)=>{
       e.preventDefault();
+      const toastId=toast.loading('changing password');
       try {
-        
+          const res=await axios.patch('http://localhost:3000/api/otp/changePassword',{email,role:user,password});
+          toast.dismiss(toastId);
+          toast.success(res.data.message);
+          navigate('/login');
       } catch (error) {
-        
+         toast.dismiss(toastId);
+        toast.error(error.response.data.message);
       }
     }
+    
   return (
     <div>
       <h1>FORGET PASSWORD PAGE</h1>

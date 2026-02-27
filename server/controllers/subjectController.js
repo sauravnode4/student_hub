@@ -23,6 +23,7 @@ const handleAddSubject=async(req,res)=>{
 
         return res.status(201).json({message:`${subject} added for you`});
     } catch (error) {
+        console.log("error  = ",error.message);
         return res.status(500).json({message:"inernal server error"})
     }
 }

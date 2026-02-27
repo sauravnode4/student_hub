@@ -10,7 +10,7 @@ const Subjects = () => {
     const [subject,setSubject]=useState("");
     const [allSubject,setAllSubject]=useState([]);
     const [edit,setEdit]=useState(null);
-    const {setIsLogin} =useUser();
+    const {setIsLogin,getStdDetails} =useUser();
     const navigate=useNavigate();
         async function getAllSub(){
         try {
@@ -85,6 +85,7 @@ const Subjects = () => {
       }
     }
     useEffect(()=>{ 
+      getStdDetails();
       getAllSub();
     },[]);
 
